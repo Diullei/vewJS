@@ -289,6 +289,7 @@ function style_vewjs(){
     });
 
     jQuery('#bklt_vew th, #bklt_vew td').css({
+     'overflow'     : 'auto',
       'padding'     : '4px 5px',
       'line-height' : '18px',
       'text-align'  : 'left',
@@ -296,16 +297,16 @@ function style_vewjs(){
     });
 
     jQuery('#bklt_vew th').css({
-     'width'       :'150px',
-     'font-weight' :'bold',
-     'background'  :'#e4e4e4',
-     'overflow'    :'hidden'
+     'width'       : '150px',
+     'font-weight' : 'bold',
+     'background'  : '#e4e4e4',
+     'overflow'    : 'auto'
     });
 
     jQuery('#bklt_vew td').css({
+      'overflow'  : 'auto',
       'width'     : '200px',
-      'max-width' : '200px',
-      'overflow'  : 'auto !important'
+      'max-width' : '200px'
     });
 
   }
