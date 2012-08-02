@@ -1,13 +1,11 @@
-var win         = window,
-    doc         = win.document,
-    debug       = false,
-    tables      = ''+
-                  '<div id="bklt_vew">'+
-                  '<table class="table"><caption>Media Events</caption><tbody id="events"></tbody></table>'+
-                  '<table class="table"><caption>Media Properties</caption><tbody id="properties"></tbody></table>'+
-                  '<table class="table" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
-                  '</div>'+
-                  '';
+var debug  = false,
+    tables = ''+
+             '<div id="bklt_vew">'+
+             '<table class="table"><caption>Media Events</caption><tbody id="events"></tbody></table>'+
+             '<table class="table"><caption>Media Properties</caption><tbody id="properties"></tbody></table>'+
+             '<table class="table" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
+             '</div>'+
+             '';
 jQuery('body').append(tables);
 dbg('div and tables ok');
 
