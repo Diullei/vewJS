@@ -1,18 +1,19 @@
 var win                   = window,
     doc                   = win.document,
-    watcher               = doc.querySelector('#vew-watcher');
+    watcher               = doc.querySelector('#vew-watcher'),
     media_properties_elts = null,
     webm                  = null,
     tables = ''+
-             '<table><caption>Events</caption><tbody id="events"></tbody></table>'+
-             '<table><caption>Properties</caption><tbody id="properties"></tbody></table>'+
-             '<table id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
+             '<table width="100%"><caption>Events</caption><tbody id="events"></tbody></table>'+
+             '<table width="100%"><caption>Properties</caption><tbody id="properties"></tbody></table>'+
+             '<table width="100%" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
              '';
 
 doc.body.appendChild('<div id="vew-watcher"><ul></ul></div>');
   watcher.style.position   = 'fixed';
   watcher.style.width      = '100%';
   watcher.style.height     = '400px';
+  watcher.style.padding    = '10px';
   watcher.style.top        = '10px';
   watcher.style.left       = '10px';
   watcher.style.background = '#f1f1f1';
