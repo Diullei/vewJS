@@ -269,6 +269,7 @@ function style_vewjs(){
       'padding'    : '10px',
       'top'        : 0,
       'left'       : 0,
+      'font'       : 'normal 12px sans-serif',
       'background' : '#f1f1f1',
       'border'     : '1px solid #ccc',
       'color'      : '#000'
