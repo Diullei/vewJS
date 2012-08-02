@@ -1,31 +1,14 @@
-var win                   = window,
-    doc                   = win.document,
-    watcher               = doc.querySelector('#vew-watcher'),
-    media_properties_elts = null,
-    webm                  = null,
+var win = window,
+    doc = win.document,
     tables = ''+
-             '<table width="100%"><caption>Events</caption><tbody id="events"></tbody></table>'+
-             '<table width="100%"><caption>Properties</caption><tbody id="properties"></tbody></table>'+
-             '<table width="100%" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
+             '<table class="table"><caption>Media Events</caption><tbody id="events"></tbody></table>'+
+             '<table class="table"><caption>Media Properties</caption><tbody id="properties"></tbody></table>'+
+             '<table class="table" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
              '';
 
-doc.body.appendChild('<div id="vew-watcher"><ul></ul></div>');
-  watcher.style.position   = 'fixed';
-  watcher.style.width      = '100%';
-  watcher.style.height     = '400px';
-  watcher.style.padding    = '10px';
-  watcher.style.top        = '10px';
-  watcher.style.left       = '10px';
-  watcher.style.background = '#f1f1f1';
-  watcher.style.border     = '1px solid #ccc';
-  watcher.style.color      = '#000';
+jQuery('body').append('<div id="bklt_vew"></div>');
+jQuery('#bklt_vew').append(tables);
 
-doc.querySelector('#vew-watcher').appendChild(tables);
-
-/*
- * Seting all events known
- *
- */
 var media_events = [];
     media_events["loadstart"]      = 0;
     media_events["progress"]       = 0;
@@ -50,10 +33,6 @@ var media_events = [];
     media_events["ratechange"]     = 0;
     media_events["volumechange"]   = 0;
 
-/*
- * Seting all controler events known
- *
- */
 var media_controller_events = [];
     media_controller_events["emptied"]        = 0;
     media_controller_events["loadedmetadata"] = 0;
@@ -70,47 +49,46 @@ var media_controller_events = [];
     media_controller_events["ratechange"]     = 0;
     media_controller_events["volumechange"]   = 0;
 
-/*
- * Seting all media properties known
- *
- */
 var media_properties = [
-      "error",
-      "src",
-      "currentSrc",
-      "crossOrigin",
-      "networkState",
-      "preload",
-      "buffered",
-      "readyState",
-      "seeking",
-      "currentTime",
-      "initialTime",
-      "duration",
-      "startOffsetTime",
-      "paused",
-      "defaultPlaybackRate",
-      "playbackRate",
-      "played",
-      "seekable",
-      "ended",
-      "autoplay",
-      "loop",
-      "mediaGroup",
-      "controller",
-      "controls",
-      "volume",
-      "muted",
-      "defaultMuted",
-      "audioTracks",
-      "videoTracks",
-      "textTracks",
-      "width",
-      "height",
-      "videoWidth",
-      "videoHeight",
-      "poster"
-    ];
+    "error",
+    "src",
+    "currentSrc",
+    "crossOrigin",
+    "networkState",
+    "preload",
+    "buffered",
+    "readyState",
+    "seeking",
+    "currentTime",
+    "initialTime",
+    "duration",
+    "startOffsetTime",
+    "paused",
+    "defaultPlaybackRate",
+    "playbackRate",
+    "played",
+    "seekable",
+    "ended",
+    "autoplay",
+    "loop",
+    "mediaGroup",
+    "controller",
+    "controls",
+    "volume",
+    "muted",
+    "defaultMuted",
+    "audioTracks",
+    "videoTracks",
+    "textTracks",
+    "width",
+    "height",
+    "videoWidth",
+    "videoHeight",
+    "poster"
+];
+
+var media_properties_elts = null,
+    webm = null;
 
 function init() {
     document._video = document.querySelector(".vew");
@@ -119,6 +97,7 @@ function init() {
     init_events();
     init_properties();
     init_mediatypes();
+    styleIt();
 
     // properties are updated even if no event was triggered
     setInterval(update_properties, 500);
@@ -145,13 +124,13 @@ function init_events() {
     tr.appendChild(th);
     tr.appendChild(td);
 
-    if ((i++ % 5) === 0) {
+    if ((i++ % 5) == 0) {
         tbody.appendChild(tr);
         tr = null;
     }
   }
 
-  if (tr !== null) tbody.appendChild(tr);
+  if (tr != null) tbody.appendChild(tr);
 
 }
 
@@ -163,7 +142,7 @@ function init_properties() {
   media_properties_elts = new Array(media_properties.length);
 
   do {
-    if (tr === null) tr = document.createElement("tr");
+    if (tr == null) tr = document.createElement("tr");
     var th = document.createElement("th"),
         td = document.createElement("td"),
         r  = eval("document._video." + media_properties[i]);
@@ -180,13 +159,13 @@ function init_properties() {
     tr.appendChild(td);
     media_properties_elts[i] = td;
 
-    if ((++i % 3) === 0) {
+    if ((++i % 3) == 0) {
         tbody.appendChild(tr);
         tr = null;
     }
 
   } while (i < media_properties.length);
-    if (tr !== null) tbody.appendChild(tr);
+    if (tr != null) tbody.appendChild(tr);
 }
 
 function init_mediatypes() {
@@ -259,4 +238,51 @@ function update_properties() {
   td.innerHTML = document._video.textTracks.length;
   td.className = "true";
     }
+}
+
+function styleIt(){
+  jQuery('#bklt_vew').css({ 
+    'position'   : 'fixed',
+    'z-index'    : '99999',
+    'width'      : '900px',
+    'padding'    : '10px',
+    'top'        : 0,
+    'left'       : 0,
+    'background' : '#f1f1f1',
+    'border'     : '1px solid #ccc',
+    'color'      : '#000'
+  });
+  jQuery('#bklt_vew table').css({
+    'width'          : '100%',
+    'margin-bottom'  : '20px',
+    'border-collapse': 'collapse',
+    'border-spacing' : '0'
+  });
+
+  jQuery('#bklt_vew caption').css({
+    'text-align'  : 'left',
+    'font-weight' : 'bold',
+    'font-size'   : '1.5em',
+    'color'       : '#333'
+  });
+
+  jQuery('#bklt_vew th, #bklt_vew td').css({
+    'padding'     : '4px 5px',
+    'line-height' : '18px',
+    'text-align'  : 'left',
+    'border-top'  : '1px solid #dddddd'
+  });
+
+  jQuery('#bklt_vew th').css({
+   'width'       :'150px',
+   'font-weight' :'bold',
+   'background'  :'#e4e4e4',
+   'overflow'    :'hidden'
+  });
+
+  jQuery('#bklt_vew td').css({
+    'width'     : '200px',
+    'max-width' : '200px',
+    'overflow'  : 'auto !important'
+  });
 }
