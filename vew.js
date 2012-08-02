@@ -1,13 +1,15 @@
-var win = window,
-    doc = win.document,
-    tables = ''+
-             '<table class="table"><caption>Media Events</caption><tbody id="events"></tbody></table>'+
-             '<table class="table"><caption>Media Properties</caption><tbody id="properties"></tbody></table>'+
-             '<table class="table" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
-             '';
-
-jQuery('body').append('<div id="bklt_vew"></div>');
-jQuery('#bklt_vew').append(tables);
+var win         = window,
+    doc         = win.document,
+    debug       = false,
+    tables      = ''+
+                  '<div id="bklt_vew">'+
+                  '<table class="table"><caption>Media Events</caption><tbody id="events"></tbody></table>'+
+                  '<table class="table"><caption>Media Properties</caption><tbody id="properties"></tbody></table>'+
+                  '<table class="table" id="canPlayType"><caption>canPlayType</caption><tbody id="m_video"></tbody></table>'+
+                  '</div>'+
+                  '';
+jQuery('body').append(tables);
+dbg('div and tables ok');
 
 var media_events = [];
     media_events["loadstart"]      = 0;
@@ -90,19 +92,32 @@ var media_properties = [
 var media_properties_elts = null,
     webm = null;
 
+dbg('variables set');
+
+function dbg(msg){
+  if (debug === true){
+    console.log(msg);
+  }
+}
+
 function init() {
-    document._video = document.querySelector(".vew");
-    webm = document.getElementById("webm");
+  document._video = document.querySelector(".vew");
+  webm = document.getElementById("webm");
 
-    init_events();
-    init_properties();
-    init_mediatypes();
-    styleIt();
+  init_events();
+  init_properties();
+  init_mediatypes();
 
-    // properties are updated even if no event was triggered
-    setInterval(update_properties, 500);
+  setInterval(update_properties, 500);
+
+  style_vewjs();
+  dbg('init() fired');
 }
 document.addEventListener("DOMContentLoaded", init, false);
+if (document.readyState == "complete" || document.readySate == "loaded") {
+  init();
+  dbg('readyState is complete');
+}
 
 function init_events() {
   for (key in media_events) {
@@ -132,6 +147,7 @@ function init_events() {
 
   if (tr != null) tbody.appendChild(tr);
 
+  dbg('init_events() fired');
 }
 
 function init_properties() {
@@ -165,7 +181,9 @@ function init_properties() {
     }
 
   } while (i < media_properties.length);
-    if (tr != null) tbody.appendChild(tr);
+  if (tr != null) tbody.appendChild(tr);
+
+  dbg('init_properties() fired');
 }
 
 function init_mediatypes() {
@@ -202,6 +220,8 @@ function init_mediatypes() {
     tbody.appendChild(tr);
   }
 
+  dbg('init_mediatypes() fired');
+
 }
 
 
@@ -218,71 +238,74 @@ function capture(event) {
 }
 
 function update_properties() {
-    var i = 0;
-    for (key in media_properties) {
-  var val = eval("document._video." + media_properties[key]);
-  media_properties_elts[i++].innerHTML = val;
-    }
-    if (!!document._video.audioTracks) {
-  var td = document.getElementById("m_audiotracks");
-  td.innerHTML = document._video.audioTracks.length;
-  td.className = "true";
-    }
-    if (!!document._video.videoTracks) {
-  var td = document.getElementById("m_videotracks");
-  td.innerHTML = document._video.videoTracks.length;
-  td.className = "true";
-    }
-    if (!!document._video.textTracks) {
-  var td = document.getElementById("m_texttracks");
-  td.innerHTML = document._video.textTracks.length;
-  td.className = "true";
-    }
+  var i = 0;
+  for (key in media_properties) {
+    var val = eval("document._video." + media_properties[key]);
+    media_properties_elts[i++].innerHTML = val;
+  }
+  if (!!document._video.audioTracks) {
+    var td = document.getElementById("m_audiotracks");
+    td.innerHTML = document._video.audioTracks.length;
+    td.className = "true";
+  }
+  if (!!document._video.videoTracks) {
+    var td = document.getElementById("m_videotracks");
+    td.innerHTML = document._video.videoTracks.length;
+    td.className = "true";
+  }
+  if (!!document._video.textTracks) {
+    var td = document.getElementById("m_texttracks");
+    td.innerHTML = document._video.textTracks.length;
+    td.className = "true";
+  }
 }
 
-function styleIt(){
-  jQuery('#bklt_vew').css({ 
-    'position'   : 'fixed',
-    'z-index'    : '99999',
-    'width'      : '900px',
-    'padding'    : '10px',
-    'top'        : 0,
-    'left'       : 0,
-    'background' : '#f1f1f1',
-    'border'     : '1px solid #ccc',
-    'color'      : '#000'
-  });
-  jQuery('#bklt_vew table').css({
-    'width'          : '100%',
-    'margin-bottom'  : '20px',
-    'border-collapse': 'collapse',
-    'border-spacing' : '0'
-  });
+function style_vewjs(){
+  if(jQuery('#bklt_vew')){
+    jQuery('#bklt_vew').css({
+      'position'   : 'fixed',
+      'z-index'    : '99999',
+      'width'      : '900px',
+      'padding'    : '10px',
+      'top'        : 0,
+      'left'       : 0,
+      'background' : '#f1f1f1',
+      'border'     : '1px solid #ccc',
+      'color'      : '#000'
+    });
+    jQuery('#bklt_vew table').css({
+      'width'          : '100%',
+      'margin-bottom'  : '20px',
+      'border-collapse': 'collapse',
+      'border-spacing' : '0'
+    });
 
-  jQuery('#bklt_vew caption').css({
-    'text-align'  : 'left',
-    'font-weight' : 'bold',
-    'font-size'   : '1.5em',
-    'color'       : '#333'
-  });
+    jQuery('#bklt_vew caption').css({
+      'text-align'  : 'left',
+      'font-weight' : 'bold',
+      'font-size'   : '1.5em',
+      'color'       : '#333'
+    });
 
-  jQuery('#bklt_vew th, #bklt_vew td').css({
-    'padding'     : '4px 5px',
-    'line-height' : '18px',
-    'text-align'  : 'left',
-    'border-top'  : '1px solid #dddddd'
-  });
+    jQuery('#bklt_vew th, #bklt_vew td').css({
+      'padding'     : '4px 5px',
+      'line-height' : '18px',
+      'text-align'  : 'left',
+      'border-top'  : '1px solid #dddddd'
+    });
 
-  jQuery('#bklt_vew th').css({
-   'width'       :'150px',
-   'font-weight' :'bold',
-   'background'  :'#e4e4e4',
-   'overflow'    :'hidden'
-  });
+    jQuery('#bklt_vew th').css({
+     'width'       :'150px',
+     'font-weight' :'bold',
+     'background'  :'#e4e4e4',
+     'overflow'    :'hidden'
+    });
 
-  jQuery('#bklt_vew td').css({
-    'width'     : '200px',
-    'max-width' : '200px',
-    'overflow'  : 'auto !important'
-  });
+    jQuery('#bklt_vew td').css({
+      'width'     : '200px',
+      'max-width' : '200px',
+      'overflow'  : 'auto !important'
+    });
+
+  }
 }
