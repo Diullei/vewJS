@@ -312,5 +312,5 @@ if(document.querySelector('#bklt_vew') === null){
     }
   }
 } else {
-  console.error('The script has already been evoked');
+  console.info('The script has already been evoked');
 }
