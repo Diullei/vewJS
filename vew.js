@@ -1,3 +1,10 @@
+if(document.querySelector('#bklt_vew') !== null){
+  dbg('The script has already been evoked');
+  return false;
+} else {
+  dbg('Starting script');
+}
+
 var debug  = false,
     tables = ''+
              '<div id="bklt_vew">'+
