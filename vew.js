@@ -1,9 +1,4 @@
-if(document.querySelector('#bklt_vew') !== null){
-  dbg('The script has already been evoked');
-  return false;
-} else {
-  dbg('Starting script');
-}
+checkExists();
 
 var debug  = false,
     tables = ''+
@@ -98,6 +93,15 @@ var media_properties_elts = null,
     webm = null;
 
 dbg('variables set');
+
+function checkExists(){
+  if(document.querySelector('#bklt_vew') !== null){
+    dbg('The script has already been evoked');
+    return false;
+  } else {
+    dbg('Starting script');
+  }
+}
 
 function dbg(msg){
   if (debug === true){
