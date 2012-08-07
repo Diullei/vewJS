@@ -9,3 +9,5 @@ Still testing. To do it, you have to:
 * Add the content of this bookmarklet to your modern browser: [vewJS](https://raw.github.com/danielfilho/vewJS/dev/vewjs.bookmarklet.js)
 * Click it when your page is loaded
 * Play the video and watch it :)
+
+[MIT-License](http://daniel.mit-license.org/)
